@@ -46214,8 +46214,8 @@ attempted value: ${formattedValue}
       headers: buildHeaders(token2)
     });
   };
-  var getShowByShowId = async (id, token2) => {
-    return await axios_default.get(`${API_BASE_URL}/userlist/show/${id}`, {
+  var getShowByShowId = async (id, showId, token2) => {
+    return await axios_default.get(`${API_BASE_URL}/userlist/show/${id}/${showId}`, {
       headers: buildHeaders(token2)
     });
   };
@@ -46567,7 +46567,7 @@ attempted value: ${formattedValue}
     };
     (0, import_react35.useEffect)(() => {
       if (token2 && user) {
-        getShowByShowId(id, token2).then((res) => {
+        getShowByShowId(user.id, id, token2).then((res) => {
           if (res.data != "") {
             setIsAdd(true);
           } else {

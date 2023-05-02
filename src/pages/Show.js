@@ -51,7 +51,7 @@ const Show = () => {
 
   useEffect(() => {
     if (token && user) {
-      getShowByShowId(id, token)
+      getShowByShowId(user.id, id, token)
         .then((res) => {
           if (res.data != "") {
             setIsAdd(true);

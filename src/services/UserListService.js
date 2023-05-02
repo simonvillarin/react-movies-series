@@ -8,8 +8,8 @@ export const getUserListById = async (id, token) => {
   });
 };
 
-export const getShowByShowId = async (id, token) => {
-  return await axios.get(`${API_BASE_URL}/userlist/show/${id}`, {
+export const getShowByShowId = async (id, showId, token) => {
+  return await axios.get(`${API_BASE_URL}/userlist/show/${id}/${showId}`, {
     headers: buildHeaders(token),
   });
 };
