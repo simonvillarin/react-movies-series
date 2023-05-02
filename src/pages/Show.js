@@ -109,7 +109,7 @@ const Show = () => {
 
   const handleRemoveFromList = () => {
     if (token && user) {
-      removeUserList(id, token)
+      removeUserList(user.id, id, token)
         .then((res) => console.log("Removed from list"))
         .catch((err) => handleError());
       setIsAdd(false);

@@ -20,8 +20,8 @@ export const addUserList = async (id, userList, token) => {
   });
 };
 
-export const removeUserList = async (id, token) => {
-  return await axios.delete(`${API_BASE_URL}/userlist/${id}`, {
+export const removeUserList = async (id, showId, token) => {
+  return await axios.delete(`${API_BASE_URL}/userlist/${id}/${showId}`, {
     headers: buildHeaders(token),
   });
 };
