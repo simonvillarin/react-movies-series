@@ -22,8 +22,14 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [alert, setAlert] = useState(false);
-
   const navigate = useNavigate();
+
+  let otp = localStorage.getItem("otp");
+  useEffect(() => {
+    if (!otp) {
+      navigate("/login");
+    }
+  }, []);
 
   useEffect(() => {
     getAllUsers()

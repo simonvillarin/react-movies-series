@@ -16,6 +16,8 @@ import { EmailContext } from "../context/EmailContext";
 import { getAllUsers } from "../services/UserService";
 import * as yup from "yup";
 import Logo from "../../public/assets/images/logo.png";
+import { getCurrentUser, destroySession } from "../services/UserService";
+import { UserContext } from "../context/UserContext";
 
 const SendEmail = () => {
   const navigate = useNavigate();
@@ -23,6 +25,18 @@ const SendEmail = () => {
   const [users, setUsers] = useState([]);
   const [isSent, setIsSent] = useState(false);
   const [isError, setIsError] = useState(false);
+  let user = getCurrentUser();
+  const { setIsUserLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+      setIsUserLoggedIn(true);
+      navigate("/home");
+    } else {
+      setIsUserLoggedIn(false);
+      destroySession();
+    }
+  }, []);
 
   const [emailDetails, setEmailDetails] = useState({
     to_name: "77 Movie User",
@@ -48,10 +62,10 @@ const SendEmail = () => {
       setEmailContext(values.to_email);
       emailjs
         .send(
-          "service_bgfpb19",
-          "template_9t1dcjn",
+          "service_z8591ym",
+          "template_lwgdyql",
           emailDetails,
-          "IKV-P9TmX79QWtFxH"
+          "IcrvIRwq1T2bBMPLO"
         )
         .then(
           (result) => {

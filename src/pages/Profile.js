@@ -30,6 +30,7 @@ const Profile = () => {
   const { setIsUserLoggedIn } = useContext(UserContext);
   const [showPassword, setShowPassword] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const navigate = useNavigate();
 
   let token = getToken();
@@ -59,18 +60,33 @@ const Profile = () => {
         let payload = {};
 
         if (values.password == "") {
-          payload = {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-          };
+          if (user.email == values.email) {
+            payload = {
+              firstName: values.firstName,
+              lastName: values.lastName,
+            };
+          } else {
+            payload = {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+            };
+          }
         } else {
-          payload = {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-            password: values.password,
-          };
+          if (user.email == values.email) {
+            payload = {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              password: values.password,
+            };
+          } else {
+            payload = {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+              password: values.password,
+            };
+          }
         }
 
         updateUser(user.id, payload, token)
@@ -85,12 +101,18 @@ const Profile = () => {
                   username: res1.data.username,
                 };
                 localStorage.setItem("user", JSON.stringify(localUser));
+                setIsUpdated(true);
                 window.location.reload();
               })
-              .catch((err) => handleError());
+              .catch((err) => {
+                setHasError(true);
+              });
           })
-          .catch((err) => handleError());
+          .catch((err) => {
+            setHasError(true);
+          });
       }
+      setEdit(false);
     } else {
       handleError();
     }
@@ -160,7 +182,20 @@ const Profile = () => {
                 </div>
               </div>
               <Divider />
-
+              {hasError ? (
+                <div style={{ width: "100%", mx: 2 }}>
+                  <Alert
+                    open={hasError}
+                    onClose={() => {
+                      setHasError(false);
+                    }}
+                    severity="error"
+                    sx={{ width: "100%" }}
+                  >
+                    Email already taken!
+                  </Alert>
+                </div>
+              ) : null}
               <Formik
                 initialValues={initVal}
                 validationSchema={updateSchema}
@@ -249,13 +284,7 @@ const Profile = () => {
                       </ErrorMessage>
                     </Box>
                   </div>
-                  <button
-                    type="submit"
-                    className="register-btn"
-                    onClick={() => {
-                      setIsUpdated(true);
-                    }}
-                  >
+                  <button type="submit" className="register-btn">
                     Update
                   </button>
                   <Snackbar

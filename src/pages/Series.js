@@ -28,7 +28,7 @@ const Series = () => {
         console.log(err);
       });
 
-    getGenres("movie")
+    getGenres("tv")
       .then((res) => setGenres(res.data.genres))
       .catch((err) => {
         console.log(err);
@@ -51,9 +51,9 @@ const Series = () => {
 
   const handleFilter = () => {
     if (selectedGenres.length >= 1) {
-      navigate(`/movie/genre/${selectedGenres}`);
+      navigate(`/tv/genre/${selectedGenres}`);
     } else {
-      navigate(`/movies`);
+      navigate(`/series`);
       setIsGenresShow(!isGenresShow);
     }
   };

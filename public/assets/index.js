@@ -1070,7 +1070,7 @@
             }
             return dispatcher;
           }
-          function useContext25(Context) {
+          function useContext26(Context) {
             var dispatcher = resolveDispatcher();
             {
               if (Context._context !== void 0) {
@@ -1096,7 +1096,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect26(create, deps) {
+          function useEffect30(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1875,10 +1875,10 @@
           exports2.startTransition = startTransition;
           exports2.unstable_act = act;
           exports2.useCallback = useCallback9;
-          exports2.useContext = useContext25;
+          exports2.useContext = useContext26;
           exports2.useDebugValue = useDebugValue4;
           exports2.useDeferredValue = useDeferredValue;
-          exports2.useEffect = useEffect26;
+          exports2.useEffect = useEffect30;
           exports2.useId = useId;
           exports2.useImperativeHandle = useImperativeHandle4;
           exports2.useInsertionEffect = useInsertionEffect3;
@@ -40790,7 +40790,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       getShows("tv").then((res) => setSeries(res.data.results)).catch((err) => {
         console.log(err);
       });
-      getGenres("movie").then((res) => setGenres(res.data.genres)).catch((err) => {
+      getGenres("tv").then((res) => setGenres(res.data.genres)).catch((err) => {
         console.log(err);
       });
       setTimeout(() => {
@@ -40808,9 +40808,9 @@ Please use another name.` : formatMuiErrorMessage(18));
     };
     const handleFilter = () => {
       if (selectedGenres.length >= 1) {
-        navigate2(`/movie/genre/${selectedGenres}`);
+        navigate2(`/tv/genre/${selectedGenres}`);
       } else {
-        navigate2(`/movies`);
+        navigate2(`/series`);
         setIsGenresShow(!isGenresShow);
       }
     };
@@ -45885,6 +45885,16 @@ attempted value: ${formattedValue}
     const navigate2 = useNavigate();
     const { setIsUserLoggedIn } = (0, import_react29.useContext)(UserContext);
     const [hasError, setHasError] = (0, import_react29.useState)(false);
+    let user = getCurrentUser();
+    (0, import_react29.useEffect)(() => {
+      if (user) {
+        setIsUserLoggedIn(true);
+        navigate2("/home");
+      } else {
+        setIsUserLoggedIn(false);
+        destroySession();
+      }
+    }, []);
     const initVal = {
       username: "",
       password: ""
@@ -45893,14 +45903,14 @@ attempted value: ${formattedValue}
       login(values3).then((res1) => {
         getUserId().then((res2) => {
           getUserById(res2.data, res1.data.token).then((res3) => {
-            let user = {
+            let user2 = {
               id: res3.data.id,
               firstName: res3.data.firstName,
               lastName: res3.data.lastName,
               email: res3.data.email,
               username: res3.data.username
             };
-            createSession(res1.data.token, user);
+            createSession(res1.data.token, user2);
             setIsUserLoggedIn(true);
             navigate2("/home");
           }).catch((err) => {
@@ -46002,6 +46012,17 @@ attempted value: ${formattedValue}
     const [showConfirmPassword, setShowConfirmPassword] = (0, import_react30.useState)(false);
     const navigate2 = useNavigate();
     const [hasError, setHasError] = (0, import_react30.useState)(false);
+    let user = getCurrentUser();
+    const { setIsUserLoggedIn } = (0, import_react30.useContext)(UserContext);
+    (0, import_react30.useEffect)(() => {
+      if (user) {
+        setIsUserLoggedIn(true);
+        navigate2("/home");
+      } else {
+        setIsUserLoggedIn(false);
+        destroySession();
+      }
+    }, []);
     const handleSubmit = (values3, { resetForm }) => {
       register(values3).then((res) => navigate2("/login")).catch((err) => {
         console.log(err);
@@ -46292,6 +46313,17 @@ attempted value: ${formattedValue}
   // src/pages/Landing.js
   var Landing = () => {
     const navigate2 = useNavigate();
+    let user = getCurrentUser();
+    const { setIsUserLoggedIn } = (0, import_react33.useContext)(UserContext);
+    (0, import_react33.useEffect)(() => {
+      if (user) {
+        setIsUserLoggedIn(true);
+        navigate2("/home");
+      } else {
+        setIsUserLoggedIn(false);
+        destroySession();
+      }
+    }, []);
     return /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement(AppBar_default, { position: "static", elevation: 0 }, /* @__PURE__ */ import_react33.default.createElement(Toolbar_default, null, /* @__PURE__ */ import_react33.default.createElement(Container_default, null, /* @__PURE__ */ import_react33.default.createElement(Box_default, { className: "nav" }, /* @__PURE__ */ import_react33.default.createElement("img", { src: logo_default, className: "logo", onClick: () => navigate2("/") }), /* @__PURE__ */ import_react33.default.createElement(Box_default, { className: "landing-right-nav" }, /* @__PURE__ */ import_react33.default.createElement("div", { onClick: () => navigate2("/signup") }, "Sign Up"), /* @__PURE__ */ import_react33.default.createElement("div", null, "|"), /* @__PURE__ */ import_react33.default.createElement("div", { onClick: () => navigate2("/login") }, "Login")))))), /* @__PURE__ */ import_react33.default.createElement("section", { className: "colored-section" }, /* @__PURE__ */ import_react33.default.createElement(Container_default, null, /* @__PURE__ */ import_react33.default.createElement(Box_default, { className: "hero-container" }, /* @__PURE__ */ import_react33.default.createElement(Box_default, { className: "hero-content" }, /* @__PURE__ */ import_react33.default.createElement("h2", null, "Find your next favorite flick with just a click!")), /* @__PURE__ */ import_react33.default.createElement("img", { src: landing_img_default, alt: "Hero Image", className: "landing-img" })))), /* @__PURE__ */ import_react33.default.createElement("section", { className: "featured" }, /* @__PURE__ */ import_react33.default.createElement(Container_default, null, /* @__PURE__ */ import_react33.default.createElement(Box_default, { className: "featured-container" }, /* @__PURE__ */ import_react33.default.createElement(Box_default, { className: "featured-content" }, /* @__PURE__ */ import_react33.default.createElement(FaSearch, { className: "featured-icon" }), /* @__PURE__ */ import_react33.default.createElement(Typography_default, { className: "featured-text", variant: "h4" }, "Discover"), /* @__PURE__ */ import_react33.default.createElement(Typography_default, { style: { color: "#8f8f8f" } }, "Discover your next favorite show with our website's vast collection.")), /* @__PURE__ */ import_react33.default.createElement(Box_default, { className: "featured-content" }, /* @__PURE__ */ import_react33.default.createElement(FaCalendarCheck, { className: "featured-icon" }), /* @__PURE__ */ import_react33.default.createElement(Typography_default, { className: "featured-text", variant: "h4" }, "Updated"), /* @__PURE__ */ import_react33.default.createElement(Typography_default, { style: { color: "#8f8f8f" } }, "Get the latest blockbuster hits and timeless classics, always up-to-date.")), /* @__PURE__ */ import_react33.default.createElement(Box_default, { className: "featured-content" }, /* @__PURE__ */ import_react33.default.createElement(FaListAlt, { className: "featured-icon" }), /* @__PURE__ */ import_react33.default.createElement(Typography_default, { className: "featured-text", variant: "h4" }, "Favorites"), /* @__PURE__ */ import_react33.default.createElement(Box_default, null, /* @__PURE__ */ import_react33.default.createElement(Typography_default, { style: { color: "#8f8f8f" } }, "Never miss a movie again - easily keep tabs on all your favorite films by adding them to your list")))))));
   };
   var Landing_default = Landing;
@@ -46308,6 +46340,7 @@ attempted value: ${formattedValue}
     const { setIsUserLoggedIn } = (0, import_react34.useContext)(UserContext);
     const [showPassword, setShowPassword] = (0, import_react34.useState)(false);
     const [isUpdated, setIsUpdated] = (0, import_react34.useState)(false);
+    const [hasError, setHasError] = (0, import_react34.useState)(false);
     const navigate2 = useNavigate();
     let token2 = getToken();
     let user = getCurrentUser();
@@ -46327,18 +46360,33 @@ attempted value: ${formattedValue}
         if (user.firstName != values3.firstName || user.lastName != values3.lastName || values3.password != "" || user.email != "") {
           let payload = {};
           if (values3.password == "") {
-            payload = {
-              firstName: values3.firstName,
-              lastName: values3.lastName,
-              email: values3.email
-            };
+            if (user.email == values3.email) {
+              payload = {
+                firstName: values3.firstName,
+                lastName: values3.lastName
+              };
+            } else {
+              payload = {
+                firstName: values3.firstName,
+                lastName: values3.lastName,
+                email: values3.email
+              };
+            }
           } else {
-            payload = {
-              firstName: values3.firstName,
-              lastName: values3.lastName,
-              email: values3.email,
-              password: values3.password
-            };
+            if (user.email == values3.email) {
+              payload = {
+                firstName: values3.firstName,
+                lastName: values3.lastName,
+                password: values3.password
+              };
+            } else {
+              payload = {
+                firstName: values3.firstName,
+                lastName: values3.lastName,
+                email: values3.email,
+                password: values3.password
+              };
+            }
           }
           updateUser(user.id, payload, token2).then((res) => {
             getUserById(user.id, token2).then((res1) => {
@@ -46350,10 +46398,16 @@ attempted value: ${formattedValue}
                 username: res1.data.username
               };
               localStorage.setItem("user", JSON.stringify(localUser));
+              setIsUpdated(true);
               window.location.reload();
-            }).catch((err) => handleError());
-          }).catch((err) => handleError());
+            }).catch((err) => {
+              setHasError(true);
+            });
+          }).catch((err) => {
+            setHasError(true);
+          });
         }
+        setEdit(false);
       } else {
         handleError();
       }
@@ -46390,7 +46444,18 @@ attempted value: ${formattedValue}
         },
         "Edit"
       )
-    )), /* @__PURE__ */ import_react34.default.createElement(Divider_default, null), /* @__PURE__ */ import_react34.default.createElement(
+    )), /* @__PURE__ */ import_react34.default.createElement(Divider_default, null), hasError ? /* @__PURE__ */ import_react34.default.createElement("div", { style: { width: "100%", mx: 2 } }, /* @__PURE__ */ import_react34.default.createElement(
+      Alert_default,
+      {
+        open: hasError,
+        onClose: () => {
+          setHasError(false);
+        },
+        severity: "error",
+        sx: { width: "100%" }
+      },
+      "Email already taken!"
+    )) : null, /* @__PURE__ */ import_react34.default.createElement(
       Formik,
       {
         initialValues: initVal,
@@ -46440,17 +46505,7 @@ attempted value: ${formattedValue}
           onClick: () => setShowPassword(true),
           className: `${edit && "edit-active"}`
         }
-      ))), /* @__PURE__ */ import_react34.default.createElement(ErrorMessage, { name: "password" }, (msg) => /* @__PURE__ */ import_react34.default.createElement(Typography_default, { variant: "body2", sx: { color: "red" } }, msg)))), /* @__PURE__ */ import_react34.default.createElement(
-        "button",
-        {
-          type: "submit",
-          className: "register-btn",
-          onClick: () => {
-            setIsUpdated(true);
-          }
-        },
-        "Update"
-      ), /* @__PURE__ */ import_react34.default.createElement(
+      ))), /* @__PURE__ */ import_react34.default.createElement(ErrorMessage, { name: "password" }, (msg) => /* @__PURE__ */ import_react34.default.createElement(Typography_default, { variant: "body2", sx: { color: "red" } }, msg)))), /* @__PURE__ */ import_react34.default.createElement("button", { type: "submit", className: "register-btn" }, "Update"), /* @__PURE__ */ import_react34.default.createElement(
         Snackbar_default,
         {
           autoHideDuration: 2e3,
@@ -46846,6 +46901,17 @@ attempted value: ${formattedValue}
     const [users, setUsers] = (0, import_react43.useState)([]);
     const [isSent, setIsSent] = (0, import_react43.useState)(false);
     const [isError, setIsError] = (0, import_react43.useState)(false);
+    let user = getCurrentUser();
+    const { setIsUserLoggedIn } = (0, import_react43.useContext)(UserContext);
+    (0, import_react43.useEffect)(() => {
+      if (user) {
+        setIsUserLoggedIn(true);
+        navigate2("/home");
+      } else {
+        setIsUserLoggedIn(false);
+        destroySession();
+      }
+    }, []);
     const [emailDetails, setEmailDetails] = (0, import_react43.useState)({
       to_name: "77 Movie User",
       otp: Math.floor(Math.random() * 9e5 + 1e5),
@@ -46858,15 +46924,15 @@ attempted value: ${formattedValue}
       to_email: ""
     };
     const sendEmail = (values3) => {
-      let findUser = users.find((user) => user.email == values3.to_email);
+      let findUser = users.find((user2) => user2.email == values3.to_email);
       if (findUser) {
         emailDetails.to_email = values3.to_email;
         setEmailContext(values3.to_email);
         es_default2.send(
-          "service_bgfpb19",
-          "template_9t1dcjn",
+          "service_z8591ym",
+          "template_lwgdyql",
           emailDetails,
-          "IKV-P9TmX79QWtFxH"
+          "IcrvIRwq1T2bBMPLO"
         ).then(
           (result) => {
             setIsSent(true);
@@ -46998,6 +47064,12 @@ attempted value: ${formattedValue}
     const { emailContext } = (0, import_react44.useContext)(EmailContext);
     const navigate2 = useNavigate();
     const storedOtp = localStorage.getItem("otp");
+    let otp = localStorage.getItem("otp");
+    (0, import_react44.useEffect)(() => {
+      if (!otp) {
+        navigate2("/login");
+      }
+    }, []);
     const [alert, setAlert] = (0, import_react44.useState)({
       isOpen: false,
       variant: "success",
@@ -47123,6 +47195,12 @@ attempted value: ${formattedValue}
     const [showConfirmPassword, setShowConfirmPassword] = (0, import_react45.useState)(false);
     const [alert, setAlert] = (0, import_react45.useState)(false);
     const navigate2 = useNavigate();
+    let otp = localStorage.getItem("otp");
+    (0, import_react45.useEffect)(() => {
+      if (!otp) {
+        navigate2("/login");
+      }
+    }, []);
     (0, import_react45.useEffect)(() => {
       getAllUsers().then((res) => setUsers(res.data)).catch((err) => console.log(err));
     }, []);
@@ -47135,9 +47213,9 @@ attempted value: ${formattedValue}
       confirmPassword: create$6().oneOf([create$9("password"), null], "Password does not match!").required("Confirm Password is required!")
     });
     const resetPass = (values3) => {
-      let otp = localStorage.getItem("otp");
-      if (otp) {
-        let findUser = users.find((user) => user.id == JSON.parse(otp).id);
+      let otp2 = localStorage.getItem("otp");
+      if (otp2) {
+        let findUser = users.find((user) => user.id == JSON.parse(otp2).id);
         if (findUser) {
           updatePassword(findUser.id, values3).then(() => {
             setAlert(true);

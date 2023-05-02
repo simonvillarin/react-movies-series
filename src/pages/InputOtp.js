@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -19,6 +19,13 @@ const InputOtp = () => {
   const { emailContext } = useContext(EmailContext);
   const navigate = useNavigate();
   const storedOtp = localStorage.getItem("otp");
+
+  let otp = localStorage.getItem("otp");
+  useEffect(() => {
+    if (!otp) {
+      navigate("/login");
+    }
+  }, []);
 
   const [alert, setAlert] = useState({
     isOpen: false,

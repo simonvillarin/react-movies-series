@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AppBar,
@@ -18,12 +18,24 @@ import { login, getUserId, getUserById } from "../services/UserService";
 import { createSession } from "../services/UserService";
 import { UserContext } from "../context/UserContext";
 import Logo from "../../public/assets/images/logo.png";
+import { getCurrentUser, destroySession } from "../services/UserService";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { setIsUserLoggedIn } = useContext(UserContext);
   const [hasError, setHasError] = useState(false);
+  let user = getCurrentUser();
+
+  useEffect(() => {
+    if (user) {
+      setIsUserLoggedIn(true);
+      navigate("/home");
+    } else {
+      setIsUserLoggedIn(false);
+      destroySession();
+    }
+  }, []);
 
   const initVal = {
     username: "",

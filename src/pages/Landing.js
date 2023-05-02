@@ -1,12 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AppBar, Container, Toolbar, Typography, Box } from "@mui/material";
 import { FaSearch, FaCalendarCheck, FaListAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import LandingImg from "../../public/assets/images/landing-img.png";
 import Logo from "../../public/assets/images/logo.png";
+import { getCurrentUser, destroySession } from "../services/UserService";
+import { UserContext } from "../context/UserContext";
 
 const Landing = () => {
   const navigate = useNavigate();
+  let user = getCurrentUser();
+  const { setIsUserLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+      setIsUserLoggedIn(true);
+      navigate("/home");
+    } else {
+      setIsUserLoggedIn(false);
+      destroySession();
+    }
+  }, []);
 
   return (
     <React.Fragment>

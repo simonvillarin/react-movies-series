@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -15,6 +15,8 @@ import * as yup from "yup";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import { register } from "../services/UserService";
 import Logo from "../../public/assets/images/logo.png";
+import { getCurrentUser, destroySession } from "../services/UserService";
+import { UserContext } from "../context/UserContext";
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +24,18 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   const [hasError, setHasError] = useState(false);
 
+  let user = getCurrentUser();
+  const { setIsUserLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+      setIsUserLoggedIn(true);
+      navigate("/home");
+    } else {
+      setIsUserLoggedIn(false);
+      destroySession();
+    }
+  }, []);
   const handleSubmit = (values, { resetForm }) => {
     register(values)
       .then((res) => navigate("/login"))
